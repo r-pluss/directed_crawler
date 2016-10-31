@@ -9,14 +9,20 @@ class Directed_Crawler():
         self.previous_increment = None
         self.response_test = self._make_response_test(init_obj['response_test'])
         self.template = init_obj['template']
-        self.incremenent_rule = self._make_increment_rule(init_obj['increment_rule'])
+        self._make_increment_rules(init_obj['increment_rules'])
         
-    def _make_increment_rule(self, rules):
+    def _make_increment_rules(self, rules):
         #need to solve problem of treating this similar to anonymous function in javascript
+        #each rule should describe a single atomic change
+        self._increment_rules = []
         for rule in rules:
-            #rule.pre_test
-            if rule.antecedent:
-                pass
+            self._increment_rules.append(lambda x: x
+        
+    def increment(self):
+        _ = self.previous_increment
+        for rule in self._increment_rules:
+            _ = rule(_)
+        self.current_increment = _
             
     
     def _make_reponse_test(self, rule):
