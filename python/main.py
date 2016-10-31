@@ -1,5 +1,3 @@
-
-
 import requests
 import simplejson as json
 #as there is no good way to declare anonymous functions, nor to compile new functions
@@ -13,12 +11,16 @@ import simplejson as json
 import crawler_config
 
 class Directed_Crawler():
-    def __init__(self, init_obj):
+    def __init__(self):
         self.last_result = None
         self.previous_increment = None
-        #self.response_test = self._make_response_test(init_obj['response_test'])
-        #self.template = init_obj['template']
-        #self._make_increment_rules(init_obj['increment_rules'])
+        self.template = crawler_config.template()
+        self._make_increment_rules()
+        #could easily be inlined without the class method call, but am not 
+        #currently refactoring incase future requirements necessitate an
+        #increase in complexity that would be better encapsulated within
+        #a function
+        self._make_stop_iteration_tests()
         
     def _make_increment_rules(self):
         self._increment_rules = crawler_config.increment_rules
@@ -35,6 +37,18 @@ class Directed_Crawler():
         #def increment_rules():
         #   return [a, b, c]
         
+    def _make_stop_iteration_tests(self):
+        self._stop_iteration_tests = crawler_config.stop_iteration_tests
+        #see _make_increment_rules for details, except tests should only receive a single argument, a reference 
+        #the instance's self obj
+    
+    def advance(self):
+        for test in self._stop_iteration_tests:
+            if test(self):
+                pass
+            else:
+                return False
+        return True
         
     def increment(self):
         _ = self.previous_increment
