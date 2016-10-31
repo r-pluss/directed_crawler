@@ -14,6 +14,7 @@ class Directed_Crawler():
     def __init__(self):
         self.last_result = None
         self.previous_increment = None
+        self.current_increment = None
         self.template = crawler_config.template()
         self._make_increment_rules()
         #could easily be inlined without the class method call, but am not 
@@ -56,10 +57,33 @@ class Directed_Crawler():
             #we pass self so that the rule can operate upon all declared attributes
             _ = rule(_, self)
         self.current_increment = _
-            
+        
+    def fetch_next(self):
+        requests.get(self.current_increment)
     
     def _make_reponse_test(self, rule):
         pass
+    
+    def process_resource(self):
+        pass
+    
+    def validate_resource(self):
+        pass
+    
+    
+    def start(self):
+        if crawler_config.template_is_valid_increment:
+            self.current_increment = self.template
+        else:
+            self.increment()
+        while self.advance():
+            self.last_response = self.fetch_next()
+            self.validate_resource()
+            if self.last_validation_result():
+                self.process_resource()
+            
+            self.increment()
+            
 
 
 #the following stateful properties must be included:
