@@ -61,15 +61,11 @@ class Directed_Crawler():
     def fetch_next(self):
         requests.get(self.current_increment)
     
-    def _make_reponse_test(self, rule):
-        pass
-    
     def process_resource(self):
         pass
     
     def validate_resource(self):
-        pass
-    
+        return crawler_config.is_valid_resource(self.last_response)
     
     def start(self):
         if crawler_config.template_is_valid_increment:
@@ -81,7 +77,6 @@ class Directed_Crawler():
             self.validate_resource()
             if self.last_validation_result():
                 self.process_resource()
-            
             self.increment()
             
 
