@@ -59,9 +59,12 @@ class Directed_Crawler():
         self.current_increment = _
         
     def fetch_next(self):
-        requests.get(self.current_increment)
+        return requests.get(self.current_increment)
     
     def process_resource(self):
+        #this is another method that will vary completely depending on what we want
+        #to do with the results of a valid resource and hence will needed to be
+        #defined almost exclusively in the config file
         pass
     
     def validate_resource(self):
