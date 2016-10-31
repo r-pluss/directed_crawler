@@ -26,4 +26,4 @@ def stop_iteration_tests():
 
 def template():
     #the initial value of the url that will be mutated via the increment method
-    return 'http://...'
+    return 'http://www.squidi.net/comic/amd/view.php?series=amd&ep=1&id=1'
