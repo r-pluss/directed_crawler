@@ -1,0 +1,2 @@
+structure
+    -should avoid true recursion, instead simulate via stateful objects created via factory-type class
