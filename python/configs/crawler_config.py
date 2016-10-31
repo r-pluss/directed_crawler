@@ -6,4 +6,24 @@
 #remember to structure the file so that all functions referenced by expected 
 #methods are declared first, as python does not have hoisting à la javascript
 
+#module level properties
+template_is_valid_increment = True
 
+
+
+
+
+def increment_rules():
+    return []
+
+def is_valid_resource(response):
+    return
+
+
+def stop_iteration_tests():
+    return []
+
+
+def template():
+    #the initial value of the url that will be mutated via the increment method
+    return 'http://...'
