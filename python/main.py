@@ -78,13 +78,3 @@ class Directed_Crawler():
             if self.last_validation_result():
                 self.process_resource()
             self.increment()
-            
-
-
-#the following stateful properties must be included:
-#self.template
-#self.last_result
-#self.increment_rule
-#self.response_test
-#self.stop_iteration_test
-#self.previous_increment
