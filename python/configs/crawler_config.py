@@ -9,6 +9,12 @@
 #module level properties
 template_is_valid_increment = True
 
+
+
+def save_content(response):
+    #persist the resource to disk
+    return response
+
 def increment_rules():
     return []
 
@@ -21,7 +27,7 @@ def process_resource():
     #all methods should return the resource to enable the chaining
     #it is acceptable to mutate the resource if latter methods in 
     #the chain will operate upon said mutations
-    return []
+    return [save_content]
 
 def stop_iteration_tests():
     return []
