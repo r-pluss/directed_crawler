@@ -9,16 +9,19 @@
 #module level properties
 template_is_valid_increment = True
 
-
-
-
-
 def increment_rules():
     return []
 
 def is_valid_resource(response):
     return
 
+def process_resource():
+    #return a list of methods declared in this config module that be
+    #chained to operate over the results of a successful request
+    #all methods should return the resource to enable the chaining
+    #it is acceptable to mutate the resource if latter methods in 
+    #the chain will operate upon said mutations
+    return []
 
 def stop_iteration_tests():
     return []
