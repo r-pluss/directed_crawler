@@ -24,9 +24,10 @@ class Directed_Crawler():
         #increase in complexity that would be better encapsulated within
         #a function
         self._make_stop_iteration_tests()
+        self._make_processing_handlers()
 
     def _make_increment_rules(self):
-        self._increment_rules = crawler_config.increment_rules
+        self._increment_rules = crawler_config.increment_rules()
         #crawler_config.increment_rules should be a list of functions that are
         #defined in the crawler_config module these function should take two
         #arguments, the result of the previous function (or the previous
@@ -41,6 +42,10 @@ class Directed_Crawler():
         #   pass
         #def increment_rules():
         #   return [a, b, c]
+        
+    def _make_processing_handlers(self):
+        self._process_handlers = crawler_config.process_resource()
+        #see comments accompanying _make_increment_rules, most of that applies here
 
     def _make_stop_iteration_tests(self):
         self._stop_iteration_tests = crawler_config.stop_iteration_tests
@@ -50,7 +55,7 @@ class Directed_Crawler():
     def advance(self):
         for test in self._stop_iteration_tests:
             if test(self):
-                pass
+                pass #because we just want to go to the next test if it passed
             else:
                 return False
         return True
@@ -70,7 +75,8 @@ class Directed_Crawler():
         #this is another method that will vary completely depending on what
         #we want to do with the results of a valid resource and hence will
         #needed to be defined almost exclusively in the config file
-        pass
+        for handler in self._process_handlers:
+            handler(self.last_response)
 
     def validate_resource(self):
         return crawler_config.is_valid_resource(self.last_response)
