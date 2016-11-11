@@ -42,10 +42,11 @@ class Directed_Crawler():
         #   pass
         #def increment_rules():
         #   return [a, b, c]
-        
+
     def _make_processing_handlers(self):
         self._process_handlers = crawler_config.process_resource()
-        #see comments accompanying _make_increment_rules, most of that applies here
+        #see comments accompanying _make_increment_rules,
+        #most of that applies here
 
     def _make_stop_iteration_tests(self):
         self._stop_iteration_tests = crawler_config.stop_iteration_tests
