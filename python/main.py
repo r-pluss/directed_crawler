@@ -48,7 +48,7 @@ class Directed_Crawler():
         #see comments accompanying _make_increment_rules, most of that applies here
 
     def _make_stop_iteration_tests(self):
-        self._stop_iteration_tests = crawler_config.stop_iteration_tests
+        self._stop_iteration_tests = crawler_config.stop_iteration_tests()
         #see _make_increment_rules for details, except tests should only
         #receive a single argument, a reference the instance's self obj
 
@@ -75,8 +75,9 @@ class Directed_Crawler():
         #this is another method that will vary completely depending on what
         #we want to do with the results of a valid resource and hence will
         #needed to be defined almost exclusively in the config file
+        resp = self.last_reponse
         for handler in self._process_handlers:
-            handler(self.last_response)
+            resp = handler(resp)
 
     def validate_resource(self):
         return crawler_config.is_valid_resource(self.last_response)
