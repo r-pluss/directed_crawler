@@ -61,12 +61,13 @@ class Directed_Crawler():
         return True
 
     def increment(self):
-        _ = self.previous_increment
+        _cur = _prev = self.current_increment
         for rule in self._increment_rules:
             #we pass self so that the rule can operate upon all
             #declared attributes
-            _ = rule(_, self)
-        self.current_increment = _
+            _cur = rule(_cur, self)
+        self.previous_increment = _prev
+        self.current_increment = _cur
 
     def fetch_next(self):
         return requests.get(self.current_increment)
