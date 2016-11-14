@@ -19,7 +19,10 @@ def increment_rules():
     return []
 
 def is_valid_resource(response):
-    return
+    if not response.ok:
+        return False
+    else:
+        return True
 
 def process_resource():
     #return a list of methods declared in this config module that be
