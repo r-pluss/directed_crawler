@@ -12,11 +12,9 @@ import bs4
 #module level properties
 template_is_valid_increment = True
 
-<<<<<<< HEAD
 #root for img resource is http://www.squidi.net/comic/amd/
 #parse successful responses by appending relative path to the end
 
-=======
 
 def inc_id(url, crawler):
     numerics = []
@@ -25,8 +23,7 @@ def inc_id(url, crawler):
         numerics.insert(0, url[current_position])
     return url[0 : current_position + 1] + str(int(''.join(numerics)) + 1)
         
-    
->>>>>>> origin/master
+
 def save_content(response):
     #persist the resource to disk
     return response
