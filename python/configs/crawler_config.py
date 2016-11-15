@@ -14,6 +14,12 @@ template_is_valid_increment = True
 
 #root for img resource is http://www.squidi.net/comic/amd/
 #parse successful responses by appending relative path to the end
+def find_image(response):
+    html = bs4.BeautifulSoup(response.content, 'lxml')
+    return html.find('img', alt = 'All comics: Copyright 2001-2008 Sean Howard')
+
+def download_image(img_data):
+    pass
 
 
 def inc_id(url, crawler):
@@ -45,7 +51,7 @@ def process_resource():
     #all methods should return the resource to enable the chaining
     #it is acceptable to mutate the resource if latter methods in
     #the chain will operate upon said mutations
-    return [save_content]
+    return [find_image, save_content]
 
 def stop_iteration_tests():
     return []
