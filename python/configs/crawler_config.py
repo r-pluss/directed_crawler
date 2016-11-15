@@ -18,6 +18,9 @@ def find_image(response):
     html = bs4.BeautifulSoup(response.content, 'lxml')
     return html.find('img', alt = 'All comics: Copyright 2001-2008 Sean Howard')
 
+def strip_attrs(img_tag):
+    return {attr: val for attr, val in img_tag.attrs.items() if attr != 'alt'}
+
 def download_image(img_data):
     pass
 
@@ -51,7 +54,7 @@ def process_resource():
     #all methods should return the resource to enable the chaining
     #it is acceptable to mutate the resource if latter methods in
     #the chain will operate upon said mutations
-    return [find_image, save_content]
+    return [find_image, strip_attrs, save_content]
 
 def stop_iteration_tests():
     return []
