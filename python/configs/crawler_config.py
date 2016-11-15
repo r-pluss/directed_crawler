@@ -7,7 +7,7 @@
 #methods are declared first, as python does not have hoisting à la javascript
 
 import bs4
-
+import requests
 
 #module level properties
 template_is_valid_increment = True
@@ -22,7 +22,11 @@ def strip_attrs(img_tag):
     return {attr: val for attr, val in img_tag.attrs.items() if attr != 'alt'}
 
 def download_image(img_data):
-    pass
+    return {
+        'img': requests.get('http://www.squidi.net/comic/amd{0}'.format(
+            img_data['src'])),
+        'attributes': img_data
+    }
 
 
 def inc_id(url, crawler):
@@ -54,7 +58,7 @@ def process_resource():
     #all methods should return the resource to enable the chaining
     #it is acceptable to mutate the resource if latter methods in
     #the chain will operate upon said mutations
-    return [find_image, strip_attrs, save_content]
+    return [find_image, strip_attrs, download_image, save_content]
 
 def stop_iteration_tests():
     return []
