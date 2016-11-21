@@ -36,6 +36,7 @@ def inc_id(url, crawler):
         while url[current_position].isdigit():
             numerics.insert(0, url[current_position])
             current_position -= 1
+        setattr(crawler.last_response, 'changed_ep', False)
         return url[0 : current_position + 1] + str(int(''.join(numerics)) + 1)
     else:
         query_string_chars = []
@@ -50,12 +51,19 @@ def inc_id(url, crawler):
             numerics.insert(0, url[current_position])
             current_position -= 1
             #collect the ep
+        setattr(crawler.last_response, 'changed_ep', True)
         return url[0: current_position + 1] + str(int(''.join(numerics)) + 1 ) + ''.join(query_string_chars) + '1'
         
 
 def save_content(response):
     #persist the resource to disk
     return response
+
+def fail_after_ep_change(crawler):
+    if getattr(crawler.last_response, 'changed_ep') and not crawler.last_result:
+        return False
+    else:
+        return True
 
 def increment_rules():
     return [inc_id]
@@ -77,8 +85,7 @@ def process_resource():
     return [find_image, strip_attrs, download_image, save_content]
 
 def stop_iteration_tests():
-    return []
-
+    return [fail_after_ep_change]
 
 def template():
     #the initial value of the url that will be mutated via the increment method
