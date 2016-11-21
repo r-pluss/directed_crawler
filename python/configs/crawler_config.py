@@ -32,9 +32,25 @@ def download_image(img_data):
 def inc_id(url, crawler):
     numerics = []
     current_position = len(url) - 1
-    while url[current_position].isdigit():
-        numerics.insert(0, url[current_position])
-    return url[0 : current_position + 1] + str(int(''.join(numerics)) + 1)
+    if crawler.last_result:
+        while url[current_position].isdigit():
+            numerics.insert(0, url[current_position])
+            current_position -= 1
+        return url[0 : current_position + 1] + str(int(''.join(numerics)) + 1)
+    else:
+        query_string_chars = []
+        while url[current_position].isdigit():
+            current_position -= 1
+            #get through the ids
+        while not url[current_position].isdigit():
+            query_string_chars.insert(0, url[current_position])
+            current_position -= 1
+            #get through all the crap after the ids
+        while url[current_position].isdigit():
+            numerics.insert(0, url[current_position])
+            current_position -= 1
+            #collect the ep
+        return url[0: current_position + 1] + str(int(''.join(numerics)) + 1 ) + ''.join(query_string_chars) + '1'
         
 
 def save_content(response):
